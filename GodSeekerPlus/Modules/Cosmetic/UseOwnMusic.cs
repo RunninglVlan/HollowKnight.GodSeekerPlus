@@ -11,19 +11,19 @@ public sealed class UseOwnMusic : Module {
 
 	private static readonly SceneEdit[] handles = [
 		// Pantheon 1
-		new(new("GG_Vengefly", "_SceneManager"), ModifySceneManagerGGMusicControl),
-		new(new("GG_Gruz_Mother", "_SceneManager"), ModifySceneManagerGGMusicControl),
-		new(new("GG_False_Knight", "_SceneManager"), ModifySceneManagerGGMusicControl),
-		new(new("GG_Mega_Moss_Charger", "_SceneManager"), StopMusicAndDestroySceneManagerFSM),
-		new(new("GG_Mega_Moss_Charger", "Mega Moss Charger"), (go) => go
+		new(new("GG_Vengefly", "_SceneManager"), ModifyGGMusicControl),
+		new(new("GG_Gruz_Mother", "_SceneManager"), ModifyGGMusicControl),
+		new(new("GG_False_Knight", "_SceneManager"), ModifyGGMusicControl),
+		new(new("GG_Mega_Moss_Charger", "_SceneManager"), StopMusicAndDestroyFSM),
+		new(new("GG_Mega_Moss_Charger", "Mega Moss Charger"), go => go
 			.LocateMyFSM("Mossy Control").GetAction("Music", 0).Enabled = false
 		),
-		new(new("GG_Hornet_1", "_SceneManager"), ModifySceneManagerFSM),
+		new(new("GG_Hornet_1", "_SceneManager"), ModifyFSM),
 
-		new(new("GG_Ghost_Gorb", "_SceneManager"), ModifySceneManagerFSM),
-		new(new("GG_Dung_Defender", "_SceneManager"), StopMusicAndModifySceneManagerFSM),
-		new(new("GG_Mage_Knight", "_SceneManager"), StopMusicAndModifySceneManagerFSM),
-		new(new("GG_Brooding_Mawlek", "_SceneManager"), ModifySceneManagerFSM),
+		new(new("GG_Ghost_Gorb", "_SceneManager"), ModifyFSM),
+		new(new("GG_Dung_Defender", "_SceneManager"), StopMusicAndModifyFSM),
+		new(new("GG_Mage_Knight", "_SceneManager"), StopMusicAndModifyFSM),
+		new(new("GG_Brooding_Mawlek", "_SceneManager"), ModifyFSM),
 		// GG_Nailmasters = NoOp,
 
 
@@ -37,11 +37,11 @@ public sealed class UseOwnMusic : Module {
 
 
 		// Pantheon 5
-		new(new("GG_Vengefly_V", "_SceneManager"), ModifySceneManagerGGMusicControl),
-		new(new("GG_Gruz_Mother_V", "_SceneManager"), ModifySceneManagerGGMusicControl),
+		new(new("GG_Vengefly_V", "_SceneManager"), ModifyGGMusicControl),
+		new(new("GG_Gruz_Mother_V", "_SceneManager"), ModifyGGMusicControl),
 
-		new(new("GG_Ghost_Gorb_V", "_SceneManager"), ModifySceneManagerFSM),
-		new(new("GG_Mage_Knight_V", "_SceneManager"), StopMusicAndModifySceneManagerFSM),
+		new(new("GG_Ghost_Gorb_V", "_SceneManager"), ModifyFSM),
+		new(new("GG_Mage_Knight_V", "_SceneManager"), StopMusicAndModifyFSM),
 		new(new("GG_Brooding_Mawlek_V", "Battle Scene"), (go) => {
 			StopMusic();
 			PlayMakerFSM fsm = go.LocateMyFSM("Activate Boss");
@@ -71,20 +71,20 @@ public sealed class UseOwnMusic : Module {
 	private static void StopMusic() =>
 		silent.Value.TransitionTo(0f);
 
-	private static void ModifySceneManagerGGMusicControl(GameObject go) => go
+	private static void ModifyGGMusicControl(GameObject go) => go
 		.LocateMyFSM("gg_music_control")
 		.ChangeTransition("Init", FsmEvent.Finished.Name, "Wait");
 
-	private static void ModifySceneManagerFSM(GameObject go) => go
+	private static void ModifyFSM(GameObject go) => go
 		.LocateMyFSM("FSM")
 		.ChangeTransition("Init", FsmEvent.Finished.Name, "Wait");
 
-	private static void StopMusicAndModifySceneManagerFSM(GameObject go) {
+	private static void StopMusicAndModifyFSM(GameObject go) {
 		StopMusic();
-		ModifySceneManagerFSM(go);
+		ModifyFSM(go);
 	}
 
-	private static void StopMusicAndDestroySceneManagerFSM(GameObject go) {
+	private static void StopMusicAndDestroyFSM(GameObject go) {
 		StopMusic();
 		UObject.Destroy(go.LocateMyFSM("FSM"));
 	}
