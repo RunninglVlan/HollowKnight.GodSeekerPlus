@@ -31,6 +31,18 @@ public sealed class UseOwnMusic : Module {
 
 
 		// Pantheon 3
+		new(new("GG_Hive_Knight", "_SceneManager"), ModifyGGMusicControl),
+		new(new("GG_Hive_Knight", "Boss Scene Controller", "door_dreamEnter"), ModifyFSM),
+		new(new("GG_Ghost_Hu", "_SceneManager"), ModifyGGMusicControl),
+		new(new("GG_Collector", "_SceneManager"), ModifyFSM),
+		new(new("GG_God_Tamer", "_SceneManager"), ModifyFSM),
+		new(new("GG_Grimm", "_SceneManager"), ModifyFSM),
+
+		new(new("GG_Ghost_Galien", "_SceneManager"), ModifyFSM),
+		new(new("GG_Grey_Prince_Zote", "_SceneManager"), ModifyFSM),
+		new(new("GG_Uumuu", "_SceneManager"), ModifyFSM),
+		new(new("GG_Hornet_2", "_SceneManager"), ModifyFSM),
+		// GG_Sly = NoOp,
 
 
 		// Pantheon 4
