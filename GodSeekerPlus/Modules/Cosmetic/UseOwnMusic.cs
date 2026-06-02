@@ -46,6 +46,22 @@ public sealed class UseOwnMusic : Module {
 
 
 		// Pantheon 4
+		new(new("GG_Crystal_Guardian_2", "_SceneManager"), ModifyFSM),
+		new(new("GG_Lost_Kin", "_SceneManager"), ModifyFSM),
+		new(new("GG_Ghost_No_Eyes", "_SceneManager"), ModifyFSM),
+		// GG_Traitor_Lord = NoOp,
+		new(new("GG_White_Defender", "_SceneManager"), ModifyFSM),
+
+		new(new("GG_Failed_Champion", "_SceneManager"), ModifyFSM),
+		new(new("GG_Ghost_Markoth", "_SceneManager"), ModifyFSM),
+		new(new("GG_Watcher_Knights", "_SceneManager"), ModifyFSM),
+		new(new("GG_Soul_Tyrant", "_SceneManager"), ModifyFSM),
+		new(new("GG_Soul_Tyrant", "Dream Mage Lord Phase2"), go => {
+			var fsm = go.LocateMyFSM("Mage Lord 2");
+			fsm.GetAction<ApplyMusicCue>("GG Music", 1).musicCue.Value
+				= fsm.GetAction<ApplyMusicCue>("Music", 2).musicCue.Value;
+		}),
+		// GG_Hollow_Knight = NoOp,
 
 
 		// Pantheon 5
