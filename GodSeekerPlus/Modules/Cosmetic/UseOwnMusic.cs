@@ -28,6 +28,18 @@ public sealed class UseOwnMusic : Module {
 
 
 		// Pantheon 2
+		new(new("GG_Ghost_Xero", "_SceneManager"), ModifyFSM),
+		new(new("GG_Crystal_Guardian", "_SceneManager"), ModifyGGMusicControl),
+		new(new("GG_Soul_Master", "_SceneManager"), ModifyFSM),
+		new(new("GG_Soul_Master", "Mage Lord Phase2"), ModifyMageLord2),
+		new(new("GG_Oblobbles", "_SceneManager"), ModifyFSM),
+		new(new("GG_Mantis_Lords", "_SceneManager"), ModifyFSM),
+
+		new(new("GG_Ghost_Marmu", "_SceneManager"), ModifyFSM),
+		new(new("GG_Nosk", "_SceneManager"), ModifyFSM),
+		new(new("GG_Flukemarm", "_SceneManager"), ModifyGGMusicControl),
+		new(new("GG_Broken_Vessel", "_SceneManager"), ModifyGGMusicControl),
+		// GG_Painter = NoOp,
 
 
 		// Pantheon 3
@@ -56,11 +68,7 @@ public sealed class UseOwnMusic : Module {
 		new(new("GG_Ghost_Markoth", "_SceneManager"), ModifyFSM),
 		new(new("GG_Watcher_Knights", "_SceneManager"), ModifyFSM),
 		new(new("GG_Soul_Tyrant", "_SceneManager"), ModifyFSM),
-		new(new("GG_Soul_Tyrant", "Dream Mage Lord Phase2"), go => {
-			var fsm = go.LocateMyFSM("Mage Lord 2");
-			fsm.GetAction<ApplyMusicCue>("GG Music", 1).musicCue.Value
-				= fsm.GetAction<ApplyMusicCue>("Music", 2).musicCue.Value;
-		}),
+		new(new("GG_Soul_Tyrant", "Dream Mage Lord Phase2"), ModifyMageLord2),
 		// GG_Hollow_Knight = NoOp,
 
 
@@ -106,6 +114,12 @@ public sealed class UseOwnMusic : Module {
 	private static void ModifyFSM(GameObject go) => go
 		.LocateMyFSM("FSM")
 		.ChangeTransition("Init", FsmEvent.Finished.Name, "Wait");
+
+	private static void ModifyMageLord2(GameObject go) {
+		var fsm = go.LocateMyFSM("Mage Lord 2");
+		fsm.GetAction<ApplyMusicCue>("GG Music", 1).musicCue.Value
+			= fsm.GetAction<ApplyMusicCue>("Music", 2).musicCue.Value;
+	}
 
 	private static void StopMusicAndModifyFSM(GameObject go) {
 		StopMusic();
