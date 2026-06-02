@@ -54,7 +54,7 @@ public sealed class UseOwnMusic : Module {
 
 		new(new("GG_Ghost_Gorb_V", "_SceneManager"), ModifyFSM),
 		new(new("GG_Mage_Knight_V", "_SceneManager"), StopMusicAndModifyFSM),
-		new(new("GG_Brooding_Mawlek_V", "Battle Scene"), (go) => {
+		new(new("GG_Brooding_Mawlek_V", "Battle Scene"), go => {
 			StopMusic();
 			PlayMakerFSM fsm = go.LocateMyFSM("Activate Boss");
 			fsm.ChangeTransition("Call Mawlek", FsmEvent.Finished.Name, "Music Up 2");
@@ -64,7 +64,7 @@ public sealed class UseOwnMusic : Module {
 				= fsm.GetAction<TransitionToAudioSnapshot>("Music Up 2", 1).snapshot.Value;
 		}),
 
-		// new(new("GG_Nosk_Hornet", "Battle Scene"), (go) => go
+		// new(new("GG_Nosk_Hornet", "Battle Scene"), go => go
 		// 	.LocateMyFSM("Battle Control")
 		// 	.ChangeTransition("Music Type", "PANTHEON", "Orig Music")
 		// ),
