@@ -101,7 +101,7 @@ public sealed class UseOwnMusic : Module {
 			.ChangeTransition("Music Type", "PANTHEON", "Orig Music")
 		),
 
-		// GG_Ghost_No_Eyes_V = NoOp,
+		new(new("GG_Ghost_No_Eyes_V", "_SceneManager"), ModifyFSM),
 
 		new(new("GG_Ghost_Markoth_V", "_SceneManager"), ModifyFSM),
 		new(new("GG_Grimm_Nightmare", "Grimm Control"), go => {
