@@ -80,7 +80,7 @@ public sealed class UseOwnMusic : Module {
 		new(new("GG_Mage_Knight_V", "_SceneManager"), StopMusicAndModifyFSM),
 		new(new("GG_Brooding_Mawlek_V", "Battle Scene"), go => {
 			StopMusic();
-			PlayMakerFSM fsm = go.LocateMyFSM("Activate Boss");
+			var fsm = go.LocateMyFSM("Activate Boss");
 			fsm.ChangeTransition("Call Mawlek", FsmEvent.Finished.Name, "Music Up 2");
 			fsm.GetAction<ApplyMusicCue>("Music", 0).musicCue.Value
 				= fsm.GetAction<ApplyMusicCue>("Music Up 2", 0).musicCue.Value;
