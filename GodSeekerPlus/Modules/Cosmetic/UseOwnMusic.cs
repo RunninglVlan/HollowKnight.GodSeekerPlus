@@ -88,12 +88,30 @@ public sealed class UseOwnMusic : Module {
 				= fsm.GetAction<TransitionToAudioSnapshot>("Music Up 2", 1).snapshot.Value;
 		}),
 
-		// new(new("GG_Nosk_Hornet", "Battle Scene"), go => go
-		// 	.LocateMyFSM("Battle Control")
-		// 	.ChangeTransition("Music Type", "PANTHEON", "Orig Music")
-		// ),
+		new(new("GG_Ghost_Xero_V", "_SceneManager"), ModifyFSM),
+		// GG_Mantis_Lords_V = NoOp,
 
-		// GG_Hollow_Knight = NoOp,
+		new(new("GG_Ghost_Marmu_V", "_SceneManager"), ModifyFSM),
+
+		new(new("GG_Collector_V", "_SceneManager"), ModifyFSM),
+
+		new(new("GG_Uumuu_V", "_SceneManager"), ModifyFSM),
+		new(new("GG_Nosk_Hornet", "Battle Scene"), go => go
+			.LocateMyFSM("Battle Control")
+			.ChangeTransition("Music Type", "PANTHEON", "Orig Music")
+		),
+
+		// GG_Ghost_No_Eyes_V = NoOp,
+
+		new(new("GG_Ghost_Markoth_V", "_SceneManager"), ModifyFSM),
+		new(new("GG_Grimm_Nightmare", "Grimm Control"), go => {
+			var fsm = go.LocateMyFSM("Control");
+			fsm.GetAction<ApplyMusicCue>("Pantheon", 0).musicCue.Value
+				= fsm.GetAction<ApplyMusicCue>("Statue", 0).musicCue.Value;
+			fsm.GetAction<TransitionToAudioSnapshot>("Pantheon", 1).snapshot.Value
+				= fsm.GetAction<TransitionToAudioSnapshot>("Statue", 1).snapshot.Value;
+		}),
+
 		// GG_Radiance = NoOp
 	];
 
