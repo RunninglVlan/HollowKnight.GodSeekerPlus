@@ -6,6 +6,9 @@ public sealed class UseOwnMusic : Module {
 	private static readonly Lazy<AudioMixerSnapshot> silent = new(() =>
 		Resources.FindObjectsOfTypeAll<AudioMixerSnapshot>().First(i => i.name == "Silent")
 	);
+	private static readonly Lazy<AudioMixerSnapshot> normal = new(() =>
+		Resources.FindObjectsOfTypeAll<AudioMixerSnapshot>().First(i => i.name == "Normal")
+	);
 
 	public override ToggleableLevel ToggleableLevel => ToggleableLevel.ChangeScene;
 
@@ -22,7 +25,7 @@ public sealed class UseOwnMusic : Module {
 
 		new(new("GG_Ghost_Gorb", "_SceneManager"), ModifyFSM),
 		new(new("GG_Dung_Defender", "_SceneManager"), StopMusicAndModifyFSM),
-		new(new("GG_Mage_Knight", "_SceneManager"), StopMusicAndModifyFSM),
+		new(new("GG_Mage_Knight", "_SceneManager"), _ => StopMusic()),
 		new(new("GG_Brooding_Mawlek", "_SceneManager"), ModifyFSM),
 		// GG_Nailmasters = NoOp,
 
@@ -77,7 +80,10 @@ public sealed class UseOwnMusic : Module {
 		new(new("GG_Gruz_Mother_V", "_SceneManager"), ModifyGGMusicControl),
 
 		new(new("GG_Ghost_Gorb_V", "_SceneManager"), ModifyFSM),
-		new(new("GG_Mage_Knight_V", "_SceneManager"), StopMusicAndModifyFSM),
+		new(new("GG_Mage_Knight_V", "_SceneManager"), _ => {
+			StopMusic();
+			Ref.GM.AudioManager.ApplyMusicSnapshot(normal.Value, 2.5f, 0.1f);
+		}),
 		new(new("GG_Brooding_Mawlek_V", "Battle Scene"), go => {
 			StopMusic();
 			var fsm = go.LocateMyFSM("Activate Boss");
